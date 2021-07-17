@@ -1,0 +1,44 @@
+.choose-box .intro { 
+    font-size: 22px; 
+    line-height: 25px; 
+    text-transform: none;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: .79em;
+    margin-top: 0;
+    letter-spacing: 0;
+}
+.choose-box .sub-intro { 
+    font-size: 22px; 
+    line-height: 25px; 
+    text-transform: none;
+    line-height: 1.2;
+    margin-bottom: .79em;
+    margin-top: 0;
+    letter-spacing: 0;
+}
+
+.box-title { 
+    font-size: 22px; 
+    line-height: 25px; 
+    text-transform: none;
+    line-height: 1.2;
+    margin-bottom: .79em;
+    margin-top: 0;
+    letter-spacing: 0;
+}
+
+em{
+text-transform: none;
+font-style: italic;
+}
+
+.available-box{
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.active{
+    background-color: "#000";
+    color: "#fff";
+  }
