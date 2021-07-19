@@ -17,19 +17,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex'
   },
-  mealPlanCard: {
-    display: 'flex',
-    margin: 'auto',
-    padding: '2vw',
-    borderStyle: 'solid',
-  },
-  media: {
-    height: '44px',
-    width: '44px',
-    textAlign: 'center',
-    display: 'flex',
-    margin: 'auto',
-  },
 }))
 
 
@@ -54,8 +41,20 @@ export default function Collection(props) {
   const [cartOpen, setCartOpen] = useState(false)
   const [itemAdded, setItemAdded] = useState(0)
   const [limitQty, setLimitQty] = useState(0)
+  const [width, setWindowWidth] = useState(0)
 
+  useEffect(() => {
 
+    updateDimensions();
+
+    window.addEventListener('resize', updateDimensions);
+    return () =>
+      window.removeEventListener('resize', updateDimensions);
+  }, [])
+  const updateDimensions = () => {
+    setWindowWidth(document.querySelector('#bold-box-kit').offsetWidth)
+    console.log(document.querySelector('#bold-box-kit').offsetWidth)
+  }
 
 
   useEffect(() => {
@@ -169,7 +168,6 @@ export default function Collection(props) {
      
     formdata.append("action", "add");
     formdata.append("product_id", item.id);
-    formdata.append("variant_id", item.selected_option.variantId);
     formdata.append(`attribute[${item.selected_option.attributeId}]`, item.selected_option.id)
     if (parseInt(newQty + selectedBox.qty) > selectedBox.max_qty) {
       let fixedQty = parseInt(selectedBox.max_qty - selectedBox.qty)
@@ -222,8 +220,8 @@ export default function Collection(props) {
         ))}
       </Stepper>
       {cartOpen === false ?
-        <AppBar position="static" style={{ padding: '1vw', backgroundColor: "#000", textAlign: 'right' }}>
-          <div style={{ backgroundColor: "#000", textAlign: 'right', width: '100%' }}>
+        <AppBar position="static" style={{ backgroundColor: "#000", textAlign: 'right', minWidth: width  }}>
+          <div style={{ padding: '1vw', backgroundColor: "#000", textAlign: 'right', minWidth: width }}>
 
             <Button
               color="inherit"
@@ -245,10 +243,12 @@ export default function Collection(props) {
 
       {step === 0 ?
         <div style={{ alignItems: 'center' }}>
-          <Grid gridColumns={`repeat(3, 1fr)`}>
+          <Grid gridColumns={width > 900 ? `repeat(3, 1fr)` : `repeat(1, 1fr)`}>
             {boxes.map(row => (
               <GridItem key={`grid-${row.name}`} onClick={() => handleSelectedBox(row)}>
-                <ChooseBox box={row} />
+                <ChooseBox 
+                box={row}
+                minWidth={width > 900 ? Math.round(width/3) : width} />
               </GridItem>
             ))}
           </Grid>
@@ -257,11 +257,13 @@ export default function Collection(props) {
         : ''}
       {step === 1 ?
         <div style={{ marginTop: '2vw' }}>
-          <Grid gridColumns={`repeat(3, 1fr)`}>
+          <Grid gridColumns={width > 900 ? `repeat(3, 1fr)` : width < 640 ? `repeat(1, 1fr)` : `repeat(2, 1fr)`}>
             {variants.length !== 0 ? variants.map(row => (
               <GridItem key={`grid-${row.id}`}>
                 {console.log({ row: row.id })}
-                <BoxItems item={row} limitQty={limitQty} selectedBox={selectedBox} handleAdd={(item, qty) => handleAdd(item, qty)} />
+                <BoxItems item={row} limitQty={limitQty} selectedBox={selectedBox} 
+                minWidth={width > 900 ? Math.round(width/3) : width}
+                handleAdd={(item, qty) => handleAdd(item, qty)} />
               </GridItem>
             )) : ''}
           </Grid>

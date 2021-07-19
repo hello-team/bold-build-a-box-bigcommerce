@@ -10,7 +10,7 @@ import { formatMoney } from 'accounting';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 345,
+        // maxWidth: 345,
         displsy: 'flex',
     },
     details: {
@@ -79,7 +79,7 @@ export default function BoxItems(props) {
 
     return (
         <>
-            <Card key={`${boldItem.id}`} className={classes.root}>
+            <Card key={`${boldItem.id}`} className={classes.root} style={{maxWidth: props.minWidth}}>
                 <CardMedia
                     component="img"
                     className={classes.media}

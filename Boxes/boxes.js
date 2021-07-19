@@ -5,7 +5,7 @@ import './boxes.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 345,
+        // maxWidth: 345,
         displsy: 'flex',
         marginTop: '2rem',
     },
@@ -48,7 +48,7 @@ export default function ChooseBox(props) {
     }, [selected]);
 
     return (
-        <Card key={`${props.box.name}`} className={classes.root}>
+        <Card key={`${props.box.name}`} className={classes.root} style={{minWidth: props.minWidth , maxWidth: props.minWidth}}>
             <div className={classes.details}>
                 <CardContent key={props.box.name} className={classes.content}>
                     <Typography component="h5" variant="h5" className={'box-title'}>
