@@ -47,6 +47,7 @@ export default function BoxItems(props) {
     useEffect(() => {
         if (!boldItem.id) {
             let item = props.item
+            item.price = props.selectedBox.price_per_item
             console.log(item.price)
             setBoldItem(item)
         }
@@ -91,16 +92,16 @@ export default function BoxItems(props) {
                                     {boldItem.price ?
                                         <em>
                                             <span style={{ textDecoration: 'line-through red', paddingRight: '1vw' }}>
-                                                {formatMoney(boldItem.price.non_sale_price_without_tax.value)}
+                                                {/* {formatMoney(boldItem.price.non_sale_price_without_tax.value)} */}
                                             </span>
                                             <span>
-                                                {formatMoney(boldItem.price.without_tax.value)}
+                                                {formatMoney(boldItem.price)}
                                             </span>
                                         </em>
                                         : 0}
                                 </Typography>
                                 : <Typography variant="subtitle1" color="textSecondary">
-                                    {boldItem.price ? formatMoney(boldItem.price.non_sale_price_without_tax.value) : 0}
+                                    {boldItem.price ? formatMoney(boldItem.price) : 0}
 
                                 </Typography>}
                         </div>

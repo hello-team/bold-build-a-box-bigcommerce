@@ -10,7 +10,7 @@ import BoxItems from '../Items/items'
 import SideCart from '../Cart/SideCart'
 import utils from '@bigcommerce/stencil-utils';
 import graphqlOptipns from '../graphql-options'
-import {getCart, getCartSummary, createCart, addCartItems, updateCartItem, deleteCartItem} from '../Cart/CartApi'
+import { getCart, getCartSummary, createCart, addCartItems, updateCartItem, deleteCartItem } from '../Cart/CartApi'
 import { normalizeFormData } from '../../theme/common/utils/api';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,9 +32,74 @@ export default function Collection(props) {
   const [customer, setCustomer] = useState(null)
   const [cartItems, setCartItems] = useState([])
   const [step, setStep] = useState(0)
-  const [selectedBox, setSelectedBox] = useState({})
+  const [selectedBox, setSelectedBox] = useState({
+    name: '4 Meals',
+    subscription_group_id: 2887,
+    interval_id: 5239,
+    interval_text: 'Monthly',
+    qty: 0,
+    max_qty: 4,
+    savings: 0,
+    price_per_item: 11.49,
+    selected: true
+  })
 
-  const [boxes, setBoxes] = useState([{ name: 'small', qty: 0, max_qty: 9, savings: 0, selected: false }, { name: 'medium', qty: 0, max_qty: 14, savings: 10, selected: false }, { name: 'large', qty: 0, max_qty: 24, savings: 20, selected: false }])
+  const [boxes, setBoxes] = useState([
+    {
+      name: '4 Meals',
+      subscription_group_id: 2887,
+      interval_id: 5239,
+      interval_text: 'Monthly',
+      qty: 0,
+      max_qty: 4,
+      savings: 0,
+      price_per_item: 11.49,
+      selected: true
+    },
+    {
+      name: '6 Meals',
+      subscription_group_id: 2888,
+      interval_id: 5240,
+      interval_text: 'Monthly',
+      qty: 0,
+      max_qty: 6,
+      savings: 10,
+      price_per_item: 9.49,
+      selected: false
+    },
+    {
+      name: '8 Meals',
+      subscription_group_id: 2889,
+      interval_id: 5241,
+      interval_text: 'Monthly',
+      qty: 0,
+      max_qty: 8,
+      price_per_item: 9.29,
+      selected: false
+    },
+    {
+      name: '10 Meals',
+      subscription_group_id: 2890,
+      interval_id: 5242,
+      interval_text: 'Monthly',
+      qty: 0,
+      max_qty: 10,
+      savings: 20,
+      price_per_item: 8.99,
+      selected: false
+    },
+    {
+      name: '12 Meals',
+      subscription_group_id: 2891,
+      interval_id: 5243,
+      interval_text: 'Monthly',
+      qty: 0,
+      max_qty: 12,
+      savings: 20,
+      price_per_item: 8.49,
+      selected: false
+    }
+  ])
 
   const [variants, setVariants] = useState([])
   const [cartCount, setCartCount] = useState(0)
@@ -103,16 +168,16 @@ export default function Collection(props) {
 
 
       let dataCart = await getCart()
-      console.log({dataCart: dataCart})
+      console.log({ dataCart: dataCart })
 
       let items = dataCart.length !== 0 && dataCart[0].lineItems.physicalItems ? dataCart[0].lineItems.physicalItems.map(x => {
         let prod = props.feed.category.products.filter(item => item.id === x.productId)[0]
 
-        let subscription_group_id = prod.custom_fields.filter(field => field.name === "subscription_group_id")[0].value
-        let interval_id = prod.custom_fields.filter(field => field.name === "interval_id")[0].value
-        let interval_text = prod.custom_fields.filter(field => field.name === "interval_name")[0].value
+        let subscription_group_id = selectedBox.subscription_group_id
+        let interval_id = selectedBox.interval_id
+        let interval_text = selectedBox.interval_text
 
-        x.listPrice = prod.price.non_sale_price_without_tax.value
+        x.listPrice = selectedBox.price_per_item
         x.subscriptionItem = x.options[0].value.includes('Subscribe') ? true : false
         if (x.subscriptionItem === true) {
           x.subscription_group_id = subscription_group_id
@@ -124,7 +189,7 @@ export default function Collection(props) {
       }) : []
       console.log({ collection: props })
 
-     let cartData = dataCart.length == 0 ? null : dataCart
+      let cartData = dataCart.length == 0 ? null : dataCart
 
       setCart(cartData)
       setCartItems(items)
@@ -140,7 +205,11 @@ export default function Collection(props) {
 
 
   const handleNewStep = (e) => {
-    setStep(e)
+    if(e === 2){
+      setCartOpen(true)
+    }else{
+      setStep(e)
+    }
   }
 
   const handleSelectedBox = (e) => {
@@ -165,7 +234,7 @@ export default function Collection(props) {
     let newQty = qty
     let formdata = new FormData();
 
-     
+
     formdata.append("action", "add");
     formdata.append("product_id", item.id);
     formdata.append(`attribute[${item.selected_option.attributeId}]`, item.selected_option.id)
@@ -220,7 +289,7 @@ export default function Collection(props) {
         ))}
       </Stepper>
       {cartOpen === false ?
-        <AppBar position="static" style={{ backgroundColor: "#000", textAlign: 'right', minWidth: width  }}>
+        <AppBar position="static" style={{ backgroundColor: "#000", textAlign: 'right', minWidth: width }}>
           <div style={{ padding: '1vw', backgroundColor: "#000", textAlign: 'right', minWidth: width }}>
 
             <Button
@@ -235,7 +304,7 @@ export default function Collection(props) {
         : <SideCart cartOpen={cartOpen} cart={cart} cartCount={cartCount} cartItems={cartItems} customer={customer}
           variants={variants}
           boxes={boxes}
-          minWidth={width > 900 ? Math.floor(width/2) : width}
+          minWidth={width > 900 ? Math.floor(width / 2) : width}
           selectedBox={selectedBox}
           handleQntyRules={(line, newQty) => handleQntyRules(line, newQty)}
           handleSelectedBox={(val) => handleSelectedBox(val)}
@@ -247,9 +316,10 @@ export default function Collection(props) {
           <Grid gridColumns={width > 900 ? `repeat(3, 1fr)` : `repeat(1, 1fr)`}>
             {boxes.map(row => (
               <GridItem key={`grid-${row.name}`} onClick={() => handleSelectedBox(row)}>
-                <ChooseBox 
-                box={row}
-                minWidth={width > 900 ? Math.floor(width/3) : width} />
+                <ChooseBox
+                  box={row}
+                  handleSelectedBox={(val) => handleSelectedBox(val)}
+                  minWidth={width > 900 ? Math.floor(width / 3) : width} />
               </GridItem>
             ))}
           </Grid>
@@ -262,9 +332,9 @@ export default function Collection(props) {
             {variants.length !== 0 ? variants.map(row => (
               <GridItem key={`grid-${row.id}`}>
                 {console.log({ row: row.id })}
-                <BoxItems item={row} limitQty={limitQty} selectedBox={selectedBox} 
-                minWidth={width > 900 ? Math.floor(width/3) : width}
-                handleAdd={(item, qty) => handleAdd(item, qty)} />
+                <BoxItems item={row} limitQty={limitQty} selectedBox={selectedBox}
+                  minWidth={width > 900 ? Math.floor(width / 3) : width}
+                  handleAdd={(item, qty) => handleAdd(item, qty)} />
               </GridItem>
             )) : ''}
           </Grid>
