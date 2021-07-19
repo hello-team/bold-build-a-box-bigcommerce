@@ -39,7 +39,6 @@ export default function Collection(props) {
     interval_text: 'Monthly',
     qty: 0,
     max_qty: 4,
-    savings: 0,
     price_per_item: 11.49,
     selected: true
   })
@@ -52,7 +51,6 @@ export default function Collection(props) {
       interval_text: 'Monthly',
       qty: 0,
       max_qty: 4,
-      savings: 0,
       price_per_item: 11.49,
       selected: true
     },
@@ -63,7 +61,6 @@ export default function Collection(props) {
       interval_text: 'Monthly',
       qty: 0,
       max_qty: 6,
-      savings: 10,
       price_per_item: 9.49,
       selected: false
     },
@@ -84,7 +81,6 @@ export default function Collection(props) {
       interval_text: 'Monthly',
       qty: 0,
       max_qty: 10,
-      savings: 20,
       price_per_item: 8.99,
       selected: false
     },
@@ -95,7 +91,6 @@ export default function Collection(props) {
       interval_text: 'Monthly',
       qty: 0,
       max_qty: 12,
-      savings: 20,
       price_per_item: 8.49,
       selected: false
     }

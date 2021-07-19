@@ -72,13 +72,12 @@ export default function BoxItems(props) {
 
     return (
         <>
-            <Card key={`${boldItem.id}`} className={classes.root} style={{maxWidth: props.minWidth}}>
+            <Card key={`${boldItem.id}`} className={classes.root} style={{ maxWidth: props.minWidth }}>
                 <CardMedia
                     component="img"
                     className={classes.media}
                     src={boldItem.image ? boldItem.image.data : ''}
                     key={`image-${boldItem.id}`}
-
                 />
                 <div className={classes.details}>
                     <CardContent key={boldItem.name} className={classes.content}>
@@ -92,7 +91,6 @@ export default function BoxItems(props) {
                                     {boldItem.price ?
                                         <em>
                                             <span style={{ textDecoration: 'line-through red', paddingRight: '1vw' }}>
-                                                {/* {formatMoney(boldItem.price.non_sale_price_without_tax.value)} */}
                                             </span>
                                             <span>
                                                 {formatMoney(boldItem.price)}
@@ -102,7 +100,6 @@ export default function BoxItems(props) {
                                 </Typography>
                                 : <Typography variant="subtitle1" color="textSecondary">
                                     {boldItem.price ? formatMoney(boldItem.price) : 0}
-
                                 </Typography>}
                         </div>
                         <div className={classes.controls}>
@@ -114,17 +111,16 @@ export default function BoxItems(props) {
 
                                     <Grid gridAutoRows>
                                         <GridItem key={`grid-item-actions-${boldItem.id}`} style={{ display: 'inline-flex', marginBottom: 0 }}>
-                                        <em>
-
-                                            <span className={'MuiButtonBase-root'}>
-                                                <RemoveIcon onClick={() => changeQnty(parseInt(boldItem.qty ? boldItem.qty : 0) - 1)} />
-                                            </span>
-                                            <span className={'MuiButtonBase-root'}>
-                                                {boldItem.qty ? boldItem.qty : 0}
-                                            </span>
-                                            <span className={'MuiButtonBase-root'}>
-                                                <AddIcon onClick={() => changeQnty(parseInt(boldItem.qty ? boldItem.qty : 0) + 1)} />
-                                            </span>
+                                            <em>
+                                                <span className={'MuiButtonBase-root'}>
+                                                    <RemoveIcon onClick={() => changeQnty(parseInt(boldItem.qty ? boldItem.qty : 0) - 1)} />
+                                                </span>
+                                                <span className={'MuiButtonBase-root'}>
+                                                    {boldItem.qty ? boldItem.qty : 0}
+                                                </span>
+                                                <span className={'MuiButtonBase-root'}>
+                                                    <AddIcon onClick={() => changeQnty(parseInt(boldItem.qty ? boldItem.qty : 0) + 1)} />
+                                                </span>
                                             </em>
 
                                         </GridItem>
@@ -138,9 +134,8 @@ export default function BoxItems(props) {
                                             label={x.label}
                                             checked={boldItem.selected_option.id === x.id ? true : false}
                                             value={boldItem.selected_option.id === x.id ? true : false}
-                                            onChange={() => handleChange( x)} />
+                                            onChange={() => handleChange(x)} />
                                     )) : ''}
-
                                 </FormGroup>
                                 <FormGroup>
                                     <Button id={'add-to-cart'} disabled={isDisabled} variant="contained" onClick={() => {
@@ -150,15 +145,10 @@ export default function BoxItems(props) {
                                         style={{ backgroundColor: '#fff', borderColor: '#84dda7', color: '#84dda7', fontWeight: 'bold', marginBottom: '.5vw' }}>
                                         Add To Cart
                             </Button>
-
                                 </FormGroup>
                             </Form>
-
-
                         </div>
                     </CardContent>
-
-
                 </div>
             </Card>
         </>
