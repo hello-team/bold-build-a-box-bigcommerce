@@ -10,7 +10,6 @@ import { formatMoney } from 'accounting';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        // maxWidth: 345,
         displsy: 'flex',
     },
     details: {
@@ -28,13 +27,6 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         paddingLeft: "1rem",
         paddingBottom: "1rem",
-    },
-    playIcon: {
-        height: 38,
-        width: 38,
-    },
-    backdrop: {
-        color: '#fff',
     },
 }));
 

@@ -104,7 +104,7 @@ export default function SideCart(props) {
 
 
     return (
-        <div>
+        <div >
             <SwipeableDrawer
                 anchor={'right'}
                 open={open}
@@ -112,7 +112,8 @@ export default function SideCart(props) {
                 onOpen={() => { }}
             >
                 <div
-                    className={classes.list}
+                style={{minWidth: props.minWidth}}
+                    // className={classes.list}
                     role="presentation"
                 >
                     <Card>

@@ -5,33 +5,14 @@ import './boxes.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        // maxWidth: 345,
-        displsy: 'flex',
-        marginTop: '2rem',
-    },
-    details: {
         display: 'flex',
-        flexDirection: 'column',
+        marginTop: '2rem',
     },
     content: {
         flex: '1 0 auto',
     },
-    media: {
-        height: '100%',
-    },
-    controls: {
-        display: 'flex',
-        alignItems: 'center',
-        paddingLeft: "1rem",
-        paddingBottom: "1rem",
-    },
-    playIcon: {
-        height: 38,
-        width: 38,
-    },
-    backdrop: {
-        color: '#fff',
-    },
+
+
 }));
 
 
@@ -50,7 +31,7 @@ export default function ChooseBox(props) {
     return (
         <Card key={`${props.box.name}`} className={classes.root} style={{minWidth: props.minWidth , maxWidth: props.minWidth}}>
             <div className={classes.details}>
-                <CardContent key={props.box.name} className={classes.content}>
+                <CardContent key={props.box.name} >
                     <Typography component="h5" variant="h5" className={'box-title'}>
                         {props.box.name}
                     </Typography>

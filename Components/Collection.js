@@ -235,6 +235,7 @@ export default function Collection(props) {
         : <SideCart cartOpen={cartOpen} cart={cart} cartCount={cartCount} cartItems={cartItems} customer={customer}
           variants={variants}
           boxes={boxes}
+          minWidth={width > 900 ? Math.floor(width/2) : width}
           selectedBox={selectedBox}
           handleQntyRules={(line, newQty) => handleQntyRules(line, newQty)}
           handleSelectedBox={(val) => handleSelectedBox(val)}
@@ -248,7 +249,7 @@ export default function Collection(props) {
               <GridItem key={`grid-${row.name}`} onClick={() => handleSelectedBox(row)}>
                 <ChooseBox 
                 box={row}
-                minWidth={width > 900 ? Math.round(width/3) : width} />
+                minWidth={width > 900 ? Math.floor(width/3) : width} />
               </GridItem>
             ))}
           </Grid>
@@ -262,7 +263,7 @@ export default function Collection(props) {
               <GridItem key={`grid-${row.id}`}>
                 {console.log({ row: row.id })}
                 <BoxItems item={row} limitQty={limitQty} selectedBox={selectedBox} 
-                minWidth={width > 900 ? Math.round(width/3) : width}
+                minWidth={width > 900 ? Math.floor(width/3) : width}
                 handleAdd={(item, qty) => handleAdd(item, qty)} />
               </GridItem>
             )) : ''}
